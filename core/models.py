@@ -158,6 +158,7 @@ class Lecturer(User):
         # return Exam.objects.filter(invigilator=self)
 
 class Student(User):
+
     class Meta:
         proxy = True
         verbose_name = "Student"
@@ -245,6 +246,7 @@ class Room(models.Model):
         return f"{self.label} ({campus_name})"
 
    
+
 class Registration(models.Model):
     student = models.ForeignKey('Student', on_delete=models.CASCADE)
     section = models.ForeignKey('Section', on_delete=models.CASCADE)
@@ -261,5 +263,4 @@ class Registration(models.Model):
     def __str__(self):
         # Display the student and section in a readable format
         return f"{self.student} registered for {self.section}"
-
 
