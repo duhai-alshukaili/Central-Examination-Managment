@@ -1,7 +1,7 @@
 from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as DefaultUserAdmin
 from core.models import User, Department, Lecturer, Student
-from core.models import Course, Section, Room
+from core.models import Course, Section, Room, Registration
 
 # Customizing the UserAdmin for your custom User model
 @admin.register(User)
@@ -137,3 +137,9 @@ class RoomAdmin(admin.ModelAdmin):
     def room_type_display(self, obj):
         return dict(Room.ROOM_TYPE_CHOICES).get(obj.room_type, 'Unknown')
     room_type_display.short_description = 'Room Type'
+
+@admin.register(Registration)
+class RegistrationAdmin(admin.ModelAdmin):
+    list_display = ('student', 'section', 'registration_date', 'status')
+    list_filter = ('status', 'registration_date')
+    search_fields = ('student__username', 'section__course__code', 'section__course__name')
