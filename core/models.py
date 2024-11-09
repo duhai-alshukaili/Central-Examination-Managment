@@ -245,6 +245,21 @@ class Room(models.Model):
         return f"{self.label} ({campus_name})"
 
    
+class Registration(models.Model):
+    student = models.ForeignKey('Student', on_delete=models.CASCADE)
+    section = models.ForeignKey('Section', on_delete=models.CASCADE)
+    registration_date = models.DateField(auto_now_add=True)  # Automatically set the date of registration
+    status = models.CharField(max_length=50, choices=[
+        ('A', 'Active'),
+        ('C', 'Completed'),
+        ('W', 'Withdrawal')
+    ], default='active')
 
+    class Meta:
+        unique_together = ('student', 'section')  # Ensure a student cannot register for the same section twice
+
+    def __str__(self):
+        # Display the student and section in a readable format
+        return f"{self.student} registered for {self.section}"
 
 

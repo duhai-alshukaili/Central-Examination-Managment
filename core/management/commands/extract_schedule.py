@@ -56,7 +56,7 @@ class Command(BaseCommand):
                         ])
 
                         # Save to the database
-                        # self.save_schedule_record(course_code, course_name, exam_date, exam_time, exam_duration, campus, room, section)
+                        self.save_schedule_record(course_code, course_name, exam_date, exam_time, exam_duration, campus, room, section)
 
     def parse_exam_date(self, line):
         match = re.search(r'(\d{2})-(\w{3})-(\d{4})', line)
@@ -106,14 +106,17 @@ class Command(BaseCommand):
         return None, None, None
 
     def save_schedule_record(self, course_code, course_name, exam_date, exam_time, exam_duration, campus, room, section_number):
-        course, _ = Course.objects.get_or_create(code=course_code, name=course_name)
-        room, _ = Room.objects.get_or_create(campus=campus, label=room)
-        section, _ = Section.objects.get_or_create(course=course, number=section_number)
-        
-        Schedule.objects.get_or_create(
-            roomID=room,
-            sectionID=section,
-            examDate=exam_date,
-            examTime=exam_time,
-            duration=exam_duration
-        )
+        try:
+            course = Course.objects.get(code=course_code, name=course_name)
+            room = Room.objects.get(campus=campus, label=room)
+            section = Section.objects.get(course=course, number=section_number)
+            
+            Schedule.objects.get_or_create(
+                roomID=room,
+                sectionID=section,
+                examDate=exam_date,
+                examTime=exam_time,
+                duration=exam_duration
+            )
+        except (Course.DoesNotExist, Room.DoesNotExist, Section.DoesNotExist):
+            self.stdout.write(f"Skipping record: Missing data for course {course_name}, room {room} or section {section_number}")
