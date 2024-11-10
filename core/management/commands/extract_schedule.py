@@ -57,7 +57,7 @@ class Command(BaseCommand):
 
                         # Save to the database
                         self.save_schedule_record(course_code, course_name, exam_date, exam_time, exam_duration, campus, room, section)
-                        self.save_schedule_record(course_code, course_name, exam_date, exam_time, exam_duration, campus, room, section)
+                        
 
     def parse_exam_date(self, line):
         match = re.search(r'(\d{2})-(\w{3})-(\d{4})', line)
@@ -114,7 +114,7 @@ class Command(BaseCommand):
             section = Section.objects.get(course=course, number=section_number)
             
             Schedule.objects.get_or_create(
-                roomID=room,
+                room=room,
                 sectionID=section,
                 examDate=exam_date,
                 examTime=exam_time,

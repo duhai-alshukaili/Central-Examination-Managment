@@ -58,11 +58,17 @@
     <nav class="sidebar" id="sidebar">
         <h4 class="text-white mb-4">Exam Management</h4>
         <ul class="nav flex-column">
-            <li class="nav-item"><a class="nav-link active" href="#">Dashboard</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">My Exams</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Grades</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Attendance</a></li>
-            <li class="nav-item"><a class="nav-link" href="#">Profile Settings</a></li>
+            {% if user.is_staff %}
+                <li class="nav-item"><a class="nav-link active" href="{% url 'core:home' %}">Dashboard</a></li>
+                <li class="nav-item"><a class="nav-link" href="{% url 'admin:index' %}">Django Administration</a></li>
+            {% elif user.user_type == 'student' %}
+                <li class="nav-item"><a class="nav-link" href="{% url 'schedule:list' %}">My Exams</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Profile Settings</a></li>
+            {% elif user.is_lecture%}
+                <li class="nav-item"><a class="nav-link" href="#">My Exams</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Invigilation Schedule</a></li>
+                <li class="nav-item"><a class="nav-link" href="#">Profile Settings</a></li>
+            {% endif %}
         </ul>
         <div class="mt-4">
             <a href="{% url 'core:logout' %}" class="btn btn-danger btn-block">Logout</a>

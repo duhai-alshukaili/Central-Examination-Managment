@@ -1,12 +1,26 @@
 {% extends "core/base_sidebar.html" %}
-
 {% block title %}
 Dashboard | Exam Management System
 {% endblock %}
 
 {% block content %}
-    <h1>Welcome to the Exam Management System Dashboard!</h1>
-    <p>
-        As a student, you can manage your exam schedule, view your grades, track your attendance, and access other academic information.
-    </p>
+    {% if user.is_authenticated %}
+        <h1>Welcome to the Exam Management System Dashboard!</h1>
+        <h2> Welcome, {{ user.get_full_name }} </h2>
+        <p>
+            {% if user.is_lecturer %}
+                As a lecturer, you can view your exam schedule, view your  invigilation schedule, 
+                update students attendance, and print exam bundle covers. 
+            {% elif user.user_type == 'student' %}
+                As a student, you can view your exam schedule, update absence excuse, and get 
+                news and updates about the exams. 
+            {% elif user.is_staff %} 
+                You have admin privileges. Click on the link in the left 
+                to go to the admin portal. 
+            {% endif %}
+        </p>
+    {% else %}
+        <h2>Welcome, Guest!</h2>
+        <p>Please log in to access more features</p>
+    {% endif %}
 {% endblock %}

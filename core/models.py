@@ -232,7 +232,7 @@ class Room(models.Model):
     
     capacity = models.PositiveBigIntegerField()
 
-    block = models.CharField(max_length=15, validators=[MinLengthValidator(2)])
+    block = models.CharField(max_length=15, validators=[MinLengthValidator(1)])
 
     class Meta:
         # Adding a unique constraint for the combination of label and campus

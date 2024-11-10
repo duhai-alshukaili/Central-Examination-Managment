@@ -1,0 +1,36 @@
+{% extends "core/base_sidebar.html" %}
+{% block title %}
+Dashboard | Exam Management System
+{% endblock %}
+
+{% block content %}
+    <h2>Exam Schedule for {{ user.get_full_name|default:user.username}}</h2>
+    <table class="table tbale-striped">
+        <thead>
+            <tr>
+                <th>Course Code</th>
+                <th>Course Name</th>
+                <th>Exam Date</th>
+                <th>Exam Time</th>
+                <th>Duration (minutes)</th>
+                <th>Room Number</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for schedule in exam_schedule %}
+            <tr>
+                <td>{{ schedule.sectionID.course.code }}</td>
+                <td>{{ schedule.sectionID.course.name }}</td>
+                <td>{{ schedule.examDate }}</td>
+                <td>{{ schedule.examTime }}</td>
+                <td>{{ schedule.duration }}</td>
+                <td>{{ schedule.room }}</td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="6">No exam schedule found.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

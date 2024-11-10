@@ -2,8 +2,8 @@ from django.db import models
 from core.models import Room, Section, Course
 
 class Schedule(models.Model):
-    # Foreign Key to the Room model (roomID)
-    roomID = models.ForeignKey(Room, on_delete=models.CASCADE)
+    # Foreign Key to the Room model
+    room = models.ForeignKey(Room, on_delete=models.CASCADE)
 
     # Foreign Key to the Section model (sectionID)
     sectionID = models.ForeignKey(Section, on_delete=models.CASCADE)
