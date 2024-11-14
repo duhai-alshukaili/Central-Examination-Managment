@@ -13,17 +13,19 @@ Dashboard | Exam Management System
                 <th>Exam Date</th>
                 <th>Exam Time</th>
                 <th>Duration (minutes)</th>
+                <th>Section</th>
                 <th>Room Number</th>
             </tr>
         </thead>
         <tbody>
             {% for schedule in exam_schedule %}
             <tr>
-                <td>{{ schedule.sectionID.course.code }}</td>
-                <td>{{ schedule.sectionID.course.name }}</td>
+                <td>{{ schedule.section.course.code }}</td>
+                <td>{{ schedule.section.course.name }}</td>
                 <td>{{ schedule.examDate }}</td>
                 <td>{{ schedule.examTime }}</td>
                 <td>{{ schedule.duration }}</td>
+                <td>{{ schedule.section.number }}</td>
                 <td>{{ schedule.room }}</td>
             </tr>
             {% empty %}

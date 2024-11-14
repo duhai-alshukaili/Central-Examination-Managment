@@ -3,6 +3,6 @@ from .models import Schedule
 
 @admin.register(Schedule)
 class ScheduleAdmin(admin.ModelAdmin):
-    list_display = ('sectionID', 'room', 'examDate', 'examTime', 'duration')
-    list_filter = ('room', 'sectionID', 'examDate')
-    search_fields = ('sectionID__course__name', 'roomID__label')
+    list_display = ('section', 'room', 'examDate', 'examTime', 'duration')
+    list_filter = ('room', 'section', 'examDate')
+    search_fields = ('section__course__name', 'room__label')

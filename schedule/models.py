@@ -6,7 +6,7 @@ class Schedule(models.Model):
     room = models.ForeignKey(Room, on_delete=models.CASCADE)
 
     # Foreign Key to the Section model (sectionID)
-    sectionID = models.ForeignKey(Section, on_delete=models.CASCADE)
+    section = models.ForeignKey(Section, on_delete=models.CASCADE)
 
     # Exam Date
     examDate = models.DateField()
@@ -19,8 +19,8 @@ class Schedule(models.Model):
 
     def __str__(self):
         # Directly access related objects through foreign key fields
-        course = self.sectionID.course
-        section_number = self.sectionID.number
+        course = self.section.course
+        section_number = self.section.number
 
         # Return a readable string representation of the schedule
         return f"Schedule for {course.code} - {course.name} (Section {section_number}) on {self.examDate} at {self.examTime}"
