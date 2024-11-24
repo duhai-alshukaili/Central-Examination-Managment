@@ -6,4 +6,5 @@ app_name='schedule'
 
 urlpatterns = [
     path('', views.ExamScheduleView.as_view(), name='list'),
+    path('invigilation/', views.InvigilationView.as_view(), name='invigilation'),
 ]
